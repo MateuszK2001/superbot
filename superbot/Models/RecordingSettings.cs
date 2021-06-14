@@ -8,7 +8,7 @@ using superbot.Models.Commands;
 
 namespace superbot.Models
 {
-    class RecordingSettings : ISerializable
+    public class RecordingSettings : ISerializable
     {
         public bool ignoreMouseMove { get; set; }
         public bool clickInsteadOfUpDown { get; set; }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using superbot.Models.Commands;
 
 namespace superbot.Models
@@ -14,7 +15,8 @@ namespace superbot.Models
         public bool isRunning { get; set; } = false;
 
         public List<Command> commands = new List<Command>();
-        public ExecutionSettings executionSettings = new ExecutionSettings(); 
+        public ExecutionSettings executionSettings = new ExecutionSettings();
+        public event Action onFinish;
 
         CancellationTokenSource cts;
         Task taskExecute;
@@ -36,10 +38,11 @@ namespace superbot.Models
                     foreach (var command in commands)
                     {
                         if (cts.Token.WaitHandle.WaitOne(command.delay))
-                            return;
+                            break;
                         command.execute();
                     }
                 } while (executionSettings.loop);
+                onFinish?.Invoke();
             }, token);
         }
 
@@ -48,6 +51,56 @@ namespace superbot.Models
             if (cts != null)
                 cts.Cancel();
         }
+        private static List<Command> _takeFirstCommands(IEnumerable<Command> commands, double time)
+        {
+            double totalTime = 0;
+            List<Command> res = new List<Command>();
+            foreach (var command in commands)
+            {
+                totalTime += command.delay.TotalMilliseconds;
+                if (totalTime >= time)
+                    break;
+                res.Add(command);
+            }
+            return res;
+        }
+        public List<Command> takeFirstCommands(double time)
+        {
+            return _takeFirstCommands(commands, time);
+        }
+        public List<Command> takeLastCommands(double time)
+        {
+            return _takeFirstCommands(commands.Reverse<Command>(), time);
+        }
+        private static List<Command> takeTillAllRemoved<T>(List<Keys> hotKeys, IEnumerable<Command> commands) where T : Command, IHavingKeyboardKey
+        {
+            HashSet<int> removedSet = new HashSet<int>();
+            Func<bool> removedAll = () => hotKeys.All(k => removedSet.Contains((int)k));
+            List<Command> res = new List<Command>();
+            foreach (Command command in commands)
+            {
+                if (command is T)
+                {
+                    int key = (int)(command as T).key;
+                    if (!removedSet.Contains(key))
+                    {
+                        removedSet.Add(key);
+                        res.Add(command);
+                    }
+                }
+                if (removedAll())
+                    break;
+            }
+            return res;
+        }
+        public void removeHotKeyFromBeginAndEnd(List<Keys> hotKeys)
+        {
+            var test = commands.ToList();
+            var beginning = takeTillAllRemoved<KeyUpCommand>(hotKeys, commands);
+            var ending = takeTillAllRemoved<KeyDownCommand>(hotKeys, commands.Reverse<Command>());
+            commands.RemoveAll(a => beginning.Contains(a) || ending.Contains(a));
+        }
+
         public void save(string filename)
         {
             using (FileStream fs = new FileStream(filename, FileMode.Create))

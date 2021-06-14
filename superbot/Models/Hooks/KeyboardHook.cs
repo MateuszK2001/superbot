@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using static superbot.Models.Hooks.HookFunctions;
 
 namespace superbot.Models.Hooks
 {

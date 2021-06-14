@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace superbot.Views
 {
     partial class MainForm
@@ -31,9 +33,9 @@ namespace superbot.Views
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.plikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zapiszToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zapiszJakoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.otwórzToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.informacjeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBoxBotSettings = new System.Windows.Forms.GroupBox();
             this.checkBoxLoop = new System.Windows.Forms.CheckBox();
@@ -48,6 +50,8 @@ namespace superbot.Views
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBoxRecordSettings = new System.Windows.Forms.GroupBox();
+            this.checkBoxPressInsteadOfUpDown = new System.Windows.Forms.CheckBox();
+            this.checkBoxClickInsteadOfUpDown = new System.Windows.Forms.CheckBox();
             this.checkBoxIgnoreMouseMove = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panelBot = new System.Windows.Forms.Panel();
@@ -58,7 +62,8 @@ namespace superbot.Views
             this.labelRecord = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.listBoxPolecenia = new System.Windows.Forms.ListBox();
+            this.listBoxCommands = new System.Windows.Forms.ListBox();
+            this.checkBoxHumanMouseMove = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.groupBoxBotSettings.SuspendLayout();
             this.groupBoxEdit.SuspendLayout();
@@ -84,30 +89,33 @@ namespace superbot.Views
             // plikToolStripMenuItem
             // 
             this.plikToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.zapiszToolStripMenuItem,
-            this.zapiszJakoToolStripMenuItem,
-            this.otwórzToolStripMenuItem});
+            this.saveToolStripMenuItem,
+            this.saveAsToolStripMenuItem,
+            this.openToolStripMenuItem});
             this.plikToolStripMenuItem.Name = "plikToolStripMenuItem";
             this.plikToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
             this.plikToolStripMenuItem.Text = "Plik";
             // 
-            // zapiszToolStripMenuItem
+            // saveToolStripMenuItem
             // 
-            this.zapiszToolStripMenuItem.Name = "zapiszToolStripMenuItem";
-            this.zapiszToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.zapiszToolStripMenuItem.Text = "Zapisz";
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Text = "Zapisz";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
-            // zapiszJakoToolStripMenuItem
+            // saveAsToolStripMenuItem
             // 
-            this.zapiszJakoToolStripMenuItem.Name = "zapiszJakoToolStripMenuItem";
-            this.zapiszJakoToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.zapiszJakoToolStripMenuItem.Text = "Zapisz jako";
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsToolStripMenuItem.Text = "Zapisz jako";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
-            // otwórzToolStripMenuItem
+            // openToolStripMenuItem
             // 
-            this.otwórzToolStripMenuItem.Name = "otwórzToolStripMenuItem";
-            this.otwórzToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.otwórzToolStripMenuItem.Text = "Otwórz";
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Text = "Otwórz";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // informacjeToolStripMenuItem
             // 
@@ -118,6 +126,7 @@ namespace superbot.Views
             // groupBoxBotSettings
             // 
             this.groupBoxBotSettings.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxBotSettings.Controls.Add(this.checkBoxHumanMouseMove);
             this.groupBoxBotSettings.Controls.Add(this.checkBoxLoop);
             this.groupBoxBotSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.groupBoxBotSettings.Location = new System.Drawing.Point(24, 556);
@@ -140,6 +149,7 @@ namespace superbot.Views
             this.checkBoxLoop.TabIndex = 2;
             this.checkBoxLoop.Text = "Loop";
             this.checkBoxLoop.UseVisualStyleBackColor = true;
+            this.checkBoxLoop.CheckedChanged += new System.EventHandler(this.updateExecutionSettings);
             // 
             // groupBoxEdit
             // 
@@ -265,6 +275,8 @@ namespace superbot.Views
             // groupBoxRecordSettings
             // 
             this.groupBoxRecordSettings.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxRecordSettings.Controls.Add(this.checkBoxPressInsteadOfUpDown);
+            this.groupBoxRecordSettings.Controls.Add(this.checkBoxClickInsteadOfUpDown);
             this.groupBoxRecordSettings.Controls.Add(this.checkBoxIgnoreMouseMove);
             this.groupBoxRecordSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.groupBoxRecordSettings.Location = new System.Drawing.Point(24, 375);
@@ -276,6 +288,32 @@ namespace superbot.Views
             this.groupBoxRecordSettings.TabStop = false;
             this.groupBoxRecordSettings.Text = "Record settings";
             // 
+            // checkBoxPressInsteadOfUpDown
+            // 
+            this.checkBoxPressInsteadOfUpDown.AutoSize = true;
+            this.checkBoxPressInsteadOfUpDown.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.checkBoxPressInsteadOfUpDown.Location = new System.Drawing.Point(17, 104);
+            this.checkBoxPressInsteadOfUpDown.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxPressInsteadOfUpDown.Name = "checkBoxPressInsteadOfUpDown";
+            this.checkBoxPressInsteadOfUpDown.Size = new System.Drawing.Size(256, 27);
+            this.checkBoxPressInsteadOfUpDown.TabIndex = 5;
+            this.checkBoxPressInsteadOfUpDown.Text = "Press instead of btn up/down";
+            this.checkBoxPressInsteadOfUpDown.UseVisualStyleBackColor = true;
+            this.checkBoxPressInsteadOfUpDown.CheckedChanged += new System.EventHandler(this.updateRecordingSettings);
+            // 
+            // checkBoxClickInsteadOfUpDown
+            // 
+            this.checkBoxClickInsteadOfUpDown.AutoSize = true;
+            this.checkBoxClickInsteadOfUpDown.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.checkBoxClickInsteadOfUpDown.Location = new System.Drawing.Point(17, 69);
+            this.checkBoxClickInsteadOfUpDown.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxClickInsteadOfUpDown.Name = "checkBoxClickInsteadOfUpDown";
+            this.checkBoxClickInsteadOfUpDown.Size = new System.Drawing.Size(249, 27);
+            this.checkBoxClickInsteadOfUpDown.TabIndex = 4;
+            this.checkBoxClickInsteadOfUpDown.Text = "Click instead of key up/down";
+            this.checkBoxClickInsteadOfUpDown.UseVisualStyleBackColor = true;
+            this.checkBoxClickInsteadOfUpDown.CheckedChanged += new System.EventHandler(this.updateRecordingSettings);
+            // 
             // checkBoxIgnoreMouseMove
             // 
             this.checkBoxIgnoreMouseMove.AutoSize = true;
@@ -283,10 +321,11 @@ namespace superbot.Views
             this.checkBoxIgnoreMouseMove.Location = new System.Drawing.Point(17, 34);
             this.checkBoxIgnoreMouseMove.Margin = new System.Windows.Forms.Padding(4);
             this.checkBoxIgnoreMouseMove.Name = "checkBoxIgnoreMouseMove";
-            this.checkBoxIgnoreMouseMove.Size = new System.Drawing.Size(185, 27);
+            this.checkBoxIgnoreMouseMove.Size = new System.Drawing.Size(183, 27);
             this.checkBoxIgnoreMouseMove.TabIndex = 3;
-            this.checkBoxIgnoreMouseMove.Text = "Ignore Mouse Move";
+            this.checkBoxIgnoreMouseMove.Text = "Ignore mouse move";
             this.checkBoxIgnoreMouseMove.UseVisualStyleBackColor = true;
+            this.checkBoxIgnoreMouseMove.CheckedChanged += new System.EventHandler(this.updateRecordingSettings);
             // 
             // groupBox1
             // 
@@ -403,19 +442,32 @@ namespace superbot.Views
             this.label1.TabIndex = 0;
             this.label1.Text = "Start/Stop Record: Ctrl+Alt+R";
             // 
-            // listBoxPolecenia
+            // listBoxCommands
             // 
-            this.listBoxPolecenia.BackColor = System.Drawing.Color.DarkBlue;
-            this.listBoxPolecenia.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.listBoxPolecenia.ForeColor = System.Drawing.Color.White;
-            this.listBoxPolecenia.FormattingEnabled = true;
-            this.listBoxPolecenia.ItemHeight = 23;
-            this.listBoxPolecenia.Location = new System.Drawing.Point(743, 45);
-            this.listBoxPolecenia.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listBoxPolecenia.Name = "listBoxPolecenia";
-            this.listBoxPolecenia.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxPolecenia.Size = new System.Drawing.Size(332, 671);
-            this.listBoxPolecenia.TabIndex = 10;
+            this.listBoxCommands.BackColor = System.Drawing.Color.DarkBlue;
+            this.listBoxCommands.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.listBoxCommands.ForeColor = System.Drawing.Color.White;
+            this.listBoxCommands.FormattingEnabled = true;
+            this.listBoxCommands.ItemHeight = 23;
+            this.listBoxCommands.Location = new System.Drawing.Point(743, 45);
+            this.listBoxCommands.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listBoxCommands.Name = "listBoxCommands";
+            this.listBoxCommands.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBoxCommands.Size = new System.Drawing.Size(332, 671);
+            this.listBoxCommands.TabIndex = 10;
+            // 
+            // checkBoxHumanMouseMove
+            // 
+            this.checkBoxHumanMouseMove.AutoSize = true;
+            this.checkBoxHumanMouseMove.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.checkBoxHumanMouseMove.Location = new System.Drawing.Point(17, 69);
+            this.checkBoxHumanMouseMove.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxHumanMouseMove.Name = "checkBoxHumanMouseMove";
+            this.checkBoxHumanMouseMove.Size = new System.Drawing.Size(188, 27);
+            this.checkBoxHumanMouseMove.TabIndex = 3;
+            this.checkBoxHumanMouseMove.Text = "Human mouse move";
+            this.checkBoxHumanMouseMove.UseVisualStyleBackColor = true;
+            this.checkBoxHumanMouseMove.CheckedChanged += new System.EventHandler(this.updateExecutionSettings);
             // 
             // MainForm
             // 
@@ -426,10 +478,11 @@ namespace superbot.Views
             this.Controls.Add(this.groupBoxEdit);
             this.Controls.Add(this.groupBoxRecordSettings);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.listBoxPolecenia);
+            this.Controls.Add(this.listBoxCommands);
             this.Controls.Add(this.menuStrip1);
             this.Name = "MainForm";
             this.Text = "SuperBot by Mateusz Kisiel";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBoxBotSettings.ResumeLayout(false);
@@ -455,9 +508,9 @@ namespace superbot.Views
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem plikToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem zapiszToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem zapiszJakoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem otwórzToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem informacjeToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBoxBotSettings;
         private System.Windows.Forms.CheckBox checkBoxLoop;
@@ -482,6 +535,9 @@ namespace superbot.Views
         private System.Windows.Forms.Label labelRecord;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListBox listBoxPolecenia;
+        private System.Windows.Forms.ListBox listBoxCommands;
+        private System.Windows.Forms.CheckBox checkBoxPressInsteadOfUpDown;
+        private System.Windows.Forms.CheckBox checkBoxClickInsteadOfUpDown;
+        private System.Windows.Forms.CheckBox checkBoxHumanMouseMove;
     }
 }

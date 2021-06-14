@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace superbot.Models.Commands
 {
-    abstract class Command : ISerializable
+    public abstract class Command : ISerializable, ICloneable
     {
         public TimeSpan delay { get; set; }
 
@@ -41,6 +41,21 @@ namespace superbot.Models.Commands
             obj.deserialize(reader);
 
             return obj;
+        }
+
+        public object Clone()
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                using(BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    serializeWithTypeInfo(writer);
+                }
+                using(BinaryReader reader = new BinaryReader(stream))
+                {
+                    return Command.deserializeToNew(reader);
+                }
+            }
         }
     }
 }

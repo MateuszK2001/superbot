@@ -10,14 +10,14 @@ using superbot.Models.Hooks;
 
 namespace superbot.Models.Commands
 {
-    class MousePressCommand : Command, IPositionable, IHavingMouseBtn
+    class MouseClickCommand : Command, IPositionable, IHavingMouseBtn
     {
         public int x { get; set; }
         public int y { get; set; }
         public MouseButtons button { get; set; }
 
-        public MousePressCommand() { }
-        public MousePressCommand(TimeSpan delay, int x, int y, MouseButtons button) : base(delay)
+        public MouseClickCommand() { }
+        public MouseClickCommand(TimeSpan delay, int x, int y, MouseButtons button) : base(delay)
         {
             this.x = x;
             this.y = y;

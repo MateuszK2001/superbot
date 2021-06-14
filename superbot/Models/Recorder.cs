@@ -11,12 +11,11 @@ namespace superbot.Models
 {
     class Recorder
     {
-        public RecordingSettings settings { get; set; }
+        public RecordingSettings settings { get; set;  }
 
         private TimeSpan elapsedTime;
 
         public event Action<Command> onNewCommand;
-
 
         private bool _isRecording;
 
@@ -27,6 +26,11 @@ namespace superbot.Models
             { 
                 _isRecording = value; 
             }
+        }
+
+        public Recorder(RecordingSettings settings)
+        {
+            this.settings = settings;
         }
 
         public void startRecording()
@@ -71,7 +75,7 @@ namespace superbot.Models
         {
             if (settings.pressInsteadOfUpDown)
                 return;
-            Command newCommand = new KeyUpCommand(DateTime.Now.TimeOfDay - elapsedTime, e.KeyCode);
+            Command newCommand = new KeyDownCommand(DateTime.Now.TimeOfDay - elapsedTime, e.KeyCode);
             elapsedTime = DateTime.Now.TimeOfDay;
             onNewCommand?.Invoke(newCommand);
         }

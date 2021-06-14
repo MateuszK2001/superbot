@@ -8,7 +8,7 @@ using superbot.Models.Commands;
 
 namespace superbot.Models
 {
-    class ExecutionSettings : ISerializable
+    public class ExecutionSettings : ISerializable
     {
         public bool loop { get; set; }
         public bool humanMouseMove{ get; set; }
