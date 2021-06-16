@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Threading;
 using superbot.Models;
 using superbot.Models.Commands;
@@ -158,24 +159,67 @@ namespace superbot.Presenters
                 view.currentCommandY = allHaveSameY ? (firstCommands as IPositionable).y : -1;
             }
 
-            /// TOdO dołożyć key
+            this.view.canChangeKey = view.selectedCommands.All(a => a is IHavingKeyboardKey);
+            if (view.canChangeKey)
+            {
+                bool allHaveSameKey = view.selectedCommands.All(a => (a as IHavingKeyboardKey).key == (firstCommands as IHavingKeyboardKey).key);
+                view.currentCommandKey = allHaveSameKey ? (firstCommands as IHavingKeyboardKey).key : Keys.None;
+            }
+        }
+
+        private void reloadCommands(IEnumerable<int> positions)
+        {
+            foreach (int pos in positions)
+                view.commands.ResetItem(pos);
         }
         public void changeDelay()
         {
+            List<int> positionsToReload = new List<int>();
+
             foreach (var command in view.selectedCommands)
+            {
                 command.delay = TimeSpan.FromMilliseconds((double)view.currentCommandDelay);
+                positionsToReload.Add(view.commands.IndexOf(command));
+            }
+
+            reloadCommands(positionsToReload);
         }
         public void changeX()
         {
+            List<int> positionsToReload = new List<int>();
+
             foreach (var command in view.selectedCommands)
                 if(command is IPositionable)
+                {
                     (command as IPositionable).x = (int)view.currentCommandX;
+                    positionsToReload.Add(view.commands.IndexOf(command));
+                }
+
+            reloadCommands(positionsToReload);
         }
         public void changeY()
         {
+            List<int> positionsToReload = new List<int>();
+
             foreach (var command in view.selectedCommands)
                 if (command is IPositionable)
+                {
                     (command as IPositionable).y = (int)view.currentCommandY;
+                    positionsToReload.Add(view.commands.IndexOf(command));
+                }
+
+            reloadCommands(positionsToReload);
+        }
+        public void changeKey()
+        {
+            List<int> positionsToReload = new List<int>();
+            foreach (var command in view.selectedCommands)
+                if (command is IHavingKeyboardKey)
+                {
+                    (command as IHavingKeyboardKey).key = view.currentCommandKey;
+                    positionsToReload.Add(view.commands.IndexOf(command));
+                }
+            reloadCommands(positionsToReload);
         }
         public void onSelectionChanged()
         {

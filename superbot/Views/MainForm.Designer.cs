@@ -42,6 +42,8 @@ namespace superbot.Views
             this.checkBoxHumanMouseMove = new System.Windows.Forms.CheckBox();
             this.checkBoxLoop = new System.Windows.Forms.CheckBox();
             this.groupBoxEdit = new System.Windows.Forms.GroupBox();
+            this.groupBoxKey = new System.Windows.Forms.GroupBox();
+            this.textBoxKey = new System.Windows.Forms.TextBox();
             this.buttonPaste = new System.Windows.Forms.Button();
             this.numericUpDownDelay = new System.Windows.Forms.NumericUpDown();
             this.buttonCopy = new System.Windows.Forms.Button();
@@ -69,6 +71,7 @@ namespace superbot.Views
             this.menuStrip1.SuspendLayout();
             this.groupBoxExecutionSettings.SuspendLayout();
             this.groupBoxEdit.SuspendLayout();
+            this.groupBoxKey.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDelay)).BeginInit();
             this.groupBoxPosition.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownY)).BeginInit();
@@ -172,6 +175,7 @@ namespace superbot.Views
             // groupBoxEdit
             // 
             this.groupBoxEdit.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxEdit.Controls.Add(this.groupBoxKey);
             this.groupBoxEdit.Controls.Add(this.buttonPaste);
             this.groupBoxEdit.Controls.Add(this.numericUpDownDelay);
             this.groupBoxEdit.Controls.Add(this.buttonCopy);
@@ -188,12 +192,38 @@ namespace superbot.Views
             this.groupBoxEdit.TabStop = false;
             this.groupBoxEdit.Text = "Edit";
             // 
+            // groupBoxKey
+            // 
+            this.groupBoxKey.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxKey.Controls.Add(this.textBoxKey);
+            this.groupBoxKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.groupBoxKey.Location = new System.Drawing.Point(33, 269);
+            this.groupBoxKey.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBoxKey.Name = "groupBoxKey";
+            this.groupBoxKey.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBoxKey.Size = new System.Drawing.Size(267, 116);
+            this.groupBoxKey.TabIndex = 12;
+            this.groupBoxKey.TabStop = false;
+            this.groupBoxKey.Text = "Key";
+            // 
+            // textBoxKey
+            // 
+            this.textBoxKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.textBoxKey.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.textBoxKey.Location = new System.Drawing.Point(37, 46);
+            this.textBoxKey.Name = "textBoxKey";
+            this.textBoxKey.ReadOnly = true;
+            this.textBoxKey.Size = new System.Drawing.Size(193, 29);
+            this.textBoxKey.TabIndex = 13;
+            this.textBoxKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxKey_KeyChanged);
+            // 
             // buttonPaste
             // 
             this.buttonPaste.BackColor = System.Drawing.Color.SlateBlue;
             this.buttonPaste.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonPaste.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonPaste.Location = new System.Drawing.Point(170, 278);
+            this.buttonPaste.Location = new System.Drawing.Point(171, 412);
             this.buttonPaste.Margin = new System.Windows.Forms.Padding(4);
             this.buttonPaste.Name = "buttonPaste";
             this.buttonPaste.Size = new System.Drawing.Size(129, 58);
@@ -225,7 +255,7 @@ namespace superbot.Views
             this.buttonCopy.BackColor = System.Drawing.Color.SlateBlue;
             this.buttonCopy.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonCopy.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonCopy.Location = new System.Drawing.Point(33, 278);
+            this.buttonCopy.Location = new System.Drawing.Point(34, 412);
             this.buttonCopy.Margin = new System.Windows.Forms.Padding(4);
             this.buttonCopy.Name = "buttonCopy";
             this.buttonCopy.Size = new System.Drawing.Size(129, 58);
@@ -239,7 +269,7 @@ namespace superbot.Views
             this.buttonDelete.BackColor = System.Drawing.Color.SlateBlue;
             this.buttonDelete.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonDelete.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonDelete.Location = new System.Drawing.Point(98, 346);
+            this.buttonDelete.Location = new System.Drawing.Point(99, 480);
             this.buttonDelete.Margin = new System.Windows.Forms.Padding(4);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(129, 58);
@@ -538,6 +568,8 @@ namespace superbot.Views
             this.groupBoxExecutionSettings.PerformLayout();
             this.groupBoxEdit.ResumeLayout(false);
             this.groupBoxEdit.PerformLayout();
+            this.groupBoxKey.ResumeLayout(false);
+            this.groupBoxKey.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDelay)).EndInit();
             this.groupBoxPosition.ResumeLayout(false);
             this.groupBoxPosition.PerformLayout();
@@ -592,5 +624,7 @@ namespace superbot.Views
         private System.Windows.Forms.NumericUpDown numericUpDownY;
         private System.Windows.Forms.NumericUpDown numericUpDownX;
         private System.Windows.Forms.Button buttonPaste;
+        private System.Windows.Forms.GroupBox groupBoxKey;
+        private System.Windows.Forms.TextBox textBoxKey;
     }
 }

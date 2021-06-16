@@ -22,6 +22,32 @@ namespace superbot.Models
                 keysDownDict.Add((int)key, false);
         }
 
+        private static List<Keys> downNow()
+        {
+            List<Keys> res = new List<Keys>();
+
+            var toCheck = Enumerable
+                .Range(0, 256)
+                .Select(KeyInterop.KeyFromVirtualKey)
+                .Where(item => item != Key.None)
+                .Distinct()
+                .Select(item => KeyInterop.VirtualKeyFromKey(item))
+                .Distinct()
+                .ToList();
+
+            foreach (var key in toCheck)
+            {
+                if (Keyboard.IsKeyDown(KeyInterop.KeyFromVirtualKey(key)))
+                {
+                    res.Add((Keys)key);
+                }
+            }
+            return res;
+        }
+        public static HotKey createFromKeysDownNow()
+        {
+            return new HotKey(downNow());
+        }
 
         private void KeyboardHook_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
@@ -54,7 +80,7 @@ namespace superbot.Models
         {
             if (!isListening)
             {
-                foreach(var key in keysDown)
+                foreach (var key in keysDown)
                 {
                     keysDownDict[(int)key] = false;
                 }
@@ -72,6 +98,11 @@ namespace superbot.Models
                 KeyboardHook.KeyUp -= KeyboardHook_KeyUp;
                 isListening = false;
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Join(" + ", keysDown.Select(a => a.ToString()).ToArray());
         }
 
     }

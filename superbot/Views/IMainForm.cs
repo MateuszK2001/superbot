@@ -24,6 +24,7 @@ namespace superbot.Views
         decimal currentCommandY { get; set; }
         Keys currentCommandKey { get; set; }
         bool canChangePosition { get; set; }
+        bool canChangeKey { get; set; }
         bool canEdit { get; set; }
         Dispatcher dispatcher { get; }
     }

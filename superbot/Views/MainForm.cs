@@ -28,6 +28,7 @@ namespace superbot.Views
             numericUpDownY.DataBindings.Add("Value", this, "currentCommandY", false, DataSourceUpdateMode.OnPropertyChanged);
             groupBoxPosition.DataBindings.Add("Enabled", this, "canChangePosition", false, DataSourceUpdateMode.OnPropertyChanged);
             groupBoxEdit.DataBindings.Add("Enabled", this, "canEdit", false, DataSourceUpdateMode.OnPropertyChanged);
+            groupBoxKey.DataBindings.Add("Enabled", this, "canChangeKey", false, DataSourceUpdateMode.OnPropertyChanged);
 
 
             var groupBoxRecordSettingsEnabledBinding = new Binding("Enabled", this, "isRecordingRunning");
@@ -35,7 +36,7 @@ namespace superbot.Views
             groupBoxRecordSettingsEnabledBinding.Format += switchBool;
             groupBoxRecordSettings.DataBindings.Add(groupBoxRecordSettingsEnabledBinding);
 
-            
+
             var groupBoxExecutionSettingsEnabledBinding = new Binding("Enabled", this, "isMacroRunning");
             groupBoxExecutionSettingsEnabledBinding.Parse += switchBool;
             groupBoxExecutionSettingsEnabledBinding.Format += switchBool;
@@ -64,6 +65,14 @@ namespace superbot.Views
                 SetProp(ref _canEdit, value);
             }
         }
+        private bool _canChangeKey;
+        public bool canChangeKey
+        {
+            get => _canChangeKey;
+            set => SetProp(ref _canChangeKey, value);
+        }
+
+
         private bool _canChangePosition;
         public bool canChangePosition
         {
@@ -74,14 +83,17 @@ namespace superbot.Views
             }
         }
         private decimal _currentCommandDelay;
-        public decimal currentCommandDelay 
+        public decimal currentCommandDelay
         {
             get => _currentCommandDelay;
             set
             {
-                SetProp(ref _currentCommandDelay, value);
-                if (value != -1)
-                    presenter.changeDelay();
+                if(value != currentCommandDelay)
+                {
+                    SetProp(ref _currentCommandDelay, value);
+                    if (value != -1)
+                        presenter.changeDelay();
+                }
             }
         }
         private decimal _currentCommandX;
@@ -89,11 +101,15 @@ namespace superbot.Views
         public decimal currentCommandX
         {
             get { return _currentCommandX; }
-            set 
-            { 
-                SetProp(ref _currentCommandX, value); 
-                if(value != -1)
-                    presenter.changeX(); 
+            set
+            {
+                if (value != currentCommandX)
+                {
+                    SetProp(ref _currentCommandX, value);
+                    if (value != -1)
+                        presenter.changeX();
+                }
+
             }
         }
 
@@ -103,11 +119,14 @@ namespace superbot.Views
         public decimal currentCommandY
         {
             get { return _currentCommandY; }
-            set 
-            { 
-                SetProp(ref _currentCommandY, value); 
-                if(value != -1)
-                    presenter.changeY(); 
+            set
+            {
+                if (value != currentCommandY)
+                {
+                    SetProp(ref _currentCommandY, value);
+                    if (value != -1)
+                        presenter.changeY();
+                }
             }
         }
 
@@ -116,7 +135,16 @@ namespace superbot.Views
         public Keys currentCommandKey
         {
             get { return _currentCommandKey; }
-            set { _currentCommandKey = value; }
+            set
+            {
+                if (value != _currentCommandKey)
+                {
+                    _currentCommandKey = value;
+                    this.textBoxKey.Text = currentCommandKey.ToString();
+                    if (currentCommandKey != Keys.None)
+                        presenter.changeKey();
+                }
+            }
         }
 
 
@@ -197,8 +225,8 @@ namespace superbot.Views
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        } 
-        private void SetProp<T>(ref T field, T value, [CallerMemberName]  string propertyName = null)
+        }
+        private void SetProp<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (field.Equals(value))
                 return;
@@ -209,12 +237,12 @@ namespace superbot.Views
 
         public bool isRecordingRunning
         {
-            get 
-            { 
-                return _isRecordingRunning; 
+            get
+            {
+                return _isRecordingRunning;
             }
-            set 
-            { 
+            set
+            {
                 SetProp(ref _isRecordingRunning, value);
                 if (isRecordingRunning)
                 {
@@ -257,12 +285,12 @@ namespace superbot.Views
         {
             presenter.deleteSelectedCommands();
         }
-    
+
 
         private void RefreshSelectedList()
         {
             selectedCommands.Clear();
-            foreach(int id in listBoxCommands.SelectedIndices)
+            foreach (int id in listBoxCommands.SelectedIndices)
             {
                 if (id >= commands.Count) // form robi event ze starym i nowym indeksem, a potem robi drugi juz poprawiony 
                     continue;
@@ -284,6 +312,12 @@ namespace superbot.Views
         private void buttonCopy_Click(object sender, EventArgs e)
         {
             presenter.copySelectedCommands();
+        }
+
+
+        private void textBoxKey_KeyChanged(object sender, KeyEventArgs e)
+        {
+            currentCommandKey = e.KeyCode;
         }
     }
 }
