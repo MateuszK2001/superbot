@@ -28,7 +28,7 @@ namespace superbot.Models.Commands
 
         public override void execute()
         {
-            Simulator.simulator.Keyboard.KeyDown((VirtualKeyCode)key);
+            Simulator.simulator.Keyboard.KeyUp((VirtualKeyCode)key);
         }
 
         public override void serialize(BinaryWriter stream)

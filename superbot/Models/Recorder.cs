@@ -41,7 +41,7 @@ namespace superbot.Models
             MouseHook.MouseMove += MouseHook_MouseMove;
             MouseHook.MouseDown += MouseHook_MouseDown;
             MouseHook.MouseUp += MouseHook_MouseUp;
-            MouseHook.MouseClick += MouseHook_MouseClick;
+            MouseHook.MouseDown += MouseHook_MouseClick;
 
             KeyboardHook.KeyDown += KeyboardHook_KeyDown;
             KeyboardHook.KeyUp += KeyboardHook_KeyUp;
@@ -55,7 +55,7 @@ namespace superbot.Models
             MouseHook.MouseMove -= MouseHook_MouseMove;
             MouseHook.MouseDown -= MouseHook_MouseDown;
             MouseHook.MouseUp -= MouseHook_MouseUp;
-            MouseHook.MouseClick -= MouseHook_MouseClick;
+            MouseHook.MouseDown -= MouseHook_MouseClick;
 
             KeyboardHook.KeyDown -= KeyboardHook_KeyDown;
             KeyboardHook.KeyUp -= KeyboardHook_KeyUp;
@@ -64,7 +64,7 @@ namespace superbot.Models
 
         private void KeyboardHook_KeyUp(object sender, KeyEventArgs e)
         {
-            if (settings.pressInsteadOfUpDown)
+            if (!isRecording || settings.pressInsteadOfUpDown)
                 return;
             Command newCommand = new KeyUpCommand(DateTime.Now.TimeOfDay - elapsedTime, e.KeyCode);
             elapsedTime = DateTime.Now.TimeOfDay;
@@ -73,7 +73,7 @@ namespace superbot.Models
 
         private void KeyboardHook_KeyDown(object sender, KeyEventArgs e)
         {
-            if (settings.pressInsteadOfUpDown)
+            if (!isRecording || settings.pressInsteadOfUpDown)
                 return;
             Command newCommand = new KeyDownCommand(DateTime.Now.TimeOfDay - elapsedTime, e.KeyCode);
             elapsedTime = DateTime.Now.TimeOfDay;
@@ -81,7 +81,7 @@ namespace superbot.Models
         }
         private void KeyboardHook_KeyPress(object sender, KeyEventArgs e)
         {
-            if (!settings.pressInsteadOfUpDown)
+            if (!isRecording || !settings.pressInsteadOfUpDown)
                 return;
             Command newCommand = new KeyPressCommand(DateTime.Now.TimeOfDay - elapsedTime, e.KeyCode);
             elapsedTime = DateTime.Now.TimeOfDay;
@@ -90,7 +90,7 @@ namespace superbot.Models
 
         private void MouseHook_MouseUp(object sender, MouseEventArgs e)
         {
-            if (settings.clickInsteadOfUpDown)
+            if (!isRecording || settings.clickInsteadOfUpDown)
                 return;
             Command newCommand = new MouseUpCommand(DateTime.Now.TimeOfDay - elapsedTime, e.Location.X, e.Location.Y, e.Button);
             elapsedTime = DateTime.Now.TimeOfDay;
@@ -99,7 +99,7 @@ namespace superbot.Models
 
         private void MouseHook_MouseDown(object sender, MouseEventArgs e)
         {
-            if (settings.clickInsteadOfUpDown)
+            if (!isRecording || settings.clickInsteadOfUpDown)
                 return;
             Command newCommand = new MouseDownCommand(DateTime.Now.TimeOfDay - elapsedTime, e.Location.X, e.Location.Y, e.Button);
             elapsedTime = DateTime.Now.TimeOfDay;
@@ -108,7 +108,7 @@ namespace superbot.Models
 
         private void MouseHook_MouseMove(object sender, MouseEventArgs e)
         {
-            if (settings.clickInsteadOfUpDown)
+            if (!isRecording || settings.clickInsteadOfUpDown || settings.ignoreMouseMove)
                 return;
             Command newCommand = new MouseMoveCommand(DateTime.Now.TimeOfDay - elapsedTime, e.Location.X, e.Location.Y);
             elapsedTime = DateTime.Now.TimeOfDay;
@@ -117,7 +117,7 @@ namespace superbot.Models
 
         private void MouseHook_MouseClick(object sender, MouseEventArgs e)
         {
-            if (!settings.clickInsteadOfUpDown)
+            if (!isRecording || !settings.clickInsteadOfUpDown)
                 return;
             Command newCommand = new MouseClickCommand(DateTime.Now.TimeOfDay - elapsedTime, e.Location.X, e.Location.Y, e.Button);
             elapsedTime = DateTime.Now.TimeOfDay;

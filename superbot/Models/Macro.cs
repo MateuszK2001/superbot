@@ -29,6 +29,7 @@ namespace superbot.Models
 
         public void run()
         {
+            isRunning = true;
             cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             taskExecute = Task.Factory.StartNew(() =>
@@ -42,6 +43,7 @@ namespace superbot.Models
                         command.execute();
                     }
                 } while (executionSettings.loop);
+                isRunning = false;
                 onFinish?.Invoke();
             }, token);
         }
@@ -79,7 +81,7 @@ namespace superbot.Models
             List<Command> res = new List<Command>();
             foreach (Command command in commands)
             {
-                if (command is T)
+                if (command is T && hotKeys.Contains((command as T).key))
                 {
                     int key = (int)(command as T).key;
                     if (!removedSet.Contains(key))

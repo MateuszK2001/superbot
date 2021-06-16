@@ -57,7 +57,7 @@ namespace superbot.Models.Commands
 
         public override string ToString()
         {
-            return "Pressed " + button.ToString();
+            return "Clicked " + button.ToString();
         }
     }
 }

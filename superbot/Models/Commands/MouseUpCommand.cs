@@ -36,6 +36,8 @@ namespace superbot.Models.Commands
         {
             Cursor.Position = new Point(x, y);
 
+
+
             if (button == MouseButtons.Left)
                 MouseHook.Click(MouseHook.Buttons.MOUSEEVENTF_LEFTUP);
             if (button == MouseButtons.Right)
@@ -52,7 +54,7 @@ namespace superbot.Models.Commands
 
         public override string ToString()
         {
-            return "Button up" + button.ToString();
+            return "Button up " + button.ToString();
         }
     }
 }

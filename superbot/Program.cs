@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using superbot.Models;
@@ -19,7 +20,7 @@ namespace superbot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //ExtentionsManager.addExtension(Config.extension, Config.extensionName, Application.ExecutablePath);
+            ExtentionsManager.addExtension(Config.extension, Config.extensionName, Application.ExecutablePath);
             string scriptPath = args.FirstOrDefault();
             if (scriptPath == null)
             {
@@ -29,6 +30,10 @@ namespace superbot
             {
                 Macro macro = new Macro(scriptPath);
                 macro.run();
+                while (macro.isRunning)
+                {
+                    Thread.Sleep(1000);
+                }
             }
         }
     }

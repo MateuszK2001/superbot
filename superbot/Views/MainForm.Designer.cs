@@ -31,21 +31,24 @@ namespace superbot.Views
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.plikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.informacjeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBoxBotSettings = new System.Windows.Forms.GroupBox();
+            this.InfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBoxExecutionSettings = new System.Windows.Forms.GroupBox();
+            this.checkBoxHumanMouseMove = new System.Windows.Forms.CheckBox();
             this.checkBoxLoop = new System.Windows.Forms.CheckBox();
             this.groupBoxEdit = new System.Windows.Forms.GroupBox();
-            this.buttonDuplicate = new System.Windows.Forms.Button();
+            this.buttonPaste = new System.Windows.Forms.Button();
+            this.numericUpDownDelay = new System.Windows.Forms.NumericUpDown();
+            this.buttonCopy = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
-            this.textBoxWaitMs = new System.Windows.Forms.TextBox();
             this.groupBoxPosition = new System.Windows.Forms.GroupBox();
-            this.textBoxPosY = new System.Windows.Forms.TextBox();
-            this.textBoxPosX = new System.Windows.Forms.TextBox();
+            this.numericUpDownY = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownX = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -63,11 +66,13 @@ namespace superbot.Views
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxCommands = new System.Windows.Forms.ListBox();
-            this.checkBoxHumanMouseMove = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
-            this.groupBoxBotSettings.SuspendLayout();
+            this.groupBoxExecutionSettings.SuspendLayout();
             this.groupBoxEdit.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDelay)).BeginInit();
             this.groupBoxPosition.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownX)).BeginInit();
             this.groupBoxRecordSettings.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panelBot.SuspendLayout();
@@ -78,7 +83,7 @@ namespace superbot.Views
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.plikToolStripMenuItem,
-            this.informacjeToolStripMenuItem});
+            this.InfoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
@@ -99,44 +104,57 @@ namespace superbot.Views
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.saveToolStripMenuItem.Text = "Zapisz";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.saveAsToolStripMenuItem.Text = "Zapisz jako";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.openToolStripMenuItem.Text = "Otwórz";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
-            // informacjeToolStripMenuItem
+            // InfoToolStripMenuItem
             // 
-            this.informacjeToolStripMenuItem.Name = "informacjeToolStripMenuItem";
-            this.informacjeToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
-            this.informacjeToolStripMenuItem.Text = "Informacje";
+            this.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem";
+            this.InfoToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
+            this.InfoToolStripMenuItem.Text = "Informacje";
             // 
-            // groupBoxBotSettings
+            // groupBoxExecutionSettings
             // 
-            this.groupBoxBotSettings.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxBotSettings.Controls.Add(this.checkBoxHumanMouseMove);
-            this.groupBoxBotSettings.Controls.Add(this.checkBoxLoop);
-            this.groupBoxBotSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.groupBoxBotSettings.Location = new System.Drawing.Point(24, 556);
-            this.groupBoxBotSettings.Margin = new System.Windows.Forms.Padding(4);
-            this.groupBoxBotSettings.Name = "groupBoxBotSettings";
-            this.groupBoxBotSettings.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBoxBotSettings.Size = new System.Drawing.Size(333, 165);
-            this.groupBoxBotSettings.TabIndex = 13;
-            this.groupBoxBotSettings.TabStop = false;
-            this.groupBoxBotSettings.Text = "Bot settings";
+            this.groupBoxExecutionSettings.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxExecutionSettings.Controls.Add(this.checkBoxHumanMouseMove);
+            this.groupBoxExecutionSettings.Controls.Add(this.checkBoxLoop);
+            this.groupBoxExecutionSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.groupBoxExecutionSettings.Location = new System.Drawing.Point(24, 556);
+            this.groupBoxExecutionSettings.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBoxExecutionSettings.Name = "groupBoxExecutionSettings";
+            this.groupBoxExecutionSettings.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBoxExecutionSettings.Size = new System.Drawing.Size(333, 165);
+            this.groupBoxExecutionSettings.TabIndex = 13;
+            this.groupBoxExecutionSettings.TabStop = false;
+            this.groupBoxExecutionSettings.Text = "Bot settings";
+            // 
+            // checkBoxHumanMouseMove
+            // 
+            this.checkBoxHumanMouseMove.AutoSize = true;
+            this.checkBoxHumanMouseMove.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.checkBoxHumanMouseMove.Location = new System.Drawing.Point(17, 69);
+            this.checkBoxHumanMouseMove.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBoxHumanMouseMove.Name = "checkBoxHumanMouseMove";
+            this.checkBoxHumanMouseMove.Size = new System.Drawing.Size(188, 27);
+            this.checkBoxHumanMouseMove.TabIndex = 3;
+            this.checkBoxHumanMouseMove.Text = "Human mouse move";
+            this.checkBoxHumanMouseMove.UseVisualStyleBackColor = true;
+            this.checkBoxHumanMouseMove.CheckedChanged += new System.EventHandler(this.updateExecutionSettings);
             // 
             // checkBoxLoop
             // 
@@ -154,9 +172,10 @@ namespace superbot.Views
             // groupBoxEdit
             // 
             this.groupBoxEdit.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxEdit.Controls.Add(this.buttonDuplicate);
+            this.groupBoxEdit.Controls.Add(this.buttonPaste);
+            this.groupBoxEdit.Controls.Add(this.numericUpDownDelay);
+            this.groupBoxEdit.Controls.Add(this.buttonCopy);
             this.groupBoxEdit.Controls.Add(this.buttonDelete);
-            this.groupBoxEdit.Controls.Add(this.textBoxWaitMs);
             this.groupBoxEdit.Controls.Add(this.groupBoxPosition);
             this.groupBoxEdit.Controls.Add(this.label7);
             this.groupBoxEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -169,50 +188,75 @@ namespace superbot.Views
             this.groupBoxEdit.TabStop = false;
             this.groupBoxEdit.Text = "Edit";
             // 
-            // buttonDuplicate
+            // buttonPaste
             // 
-            this.buttonDuplicate.BackColor = System.Drawing.Color.SlateBlue;
-            this.buttonDuplicate.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonDuplicate.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonDuplicate.Location = new System.Drawing.Point(171, 48);
-            this.buttonDuplicate.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonDuplicate.Name = "buttonDuplicate";
-            this.buttonDuplicate.Size = new System.Drawing.Size(129, 58);
-            this.buttonDuplicate.TabIndex = 9;
-            this.buttonDuplicate.Text = "Duplicate";
-            this.buttonDuplicate.UseVisualStyleBackColor = false;
+            this.buttonPaste.BackColor = System.Drawing.Color.SlateBlue;
+            this.buttonPaste.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonPaste.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonPaste.Location = new System.Drawing.Point(170, 278);
+            this.buttonPaste.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonPaste.Name = "buttonPaste";
+            this.buttonPaste.Size = new System.Drawing.Size(129, 58);
+            this.buttonPaste.TabIndex = 11;
+            this.buttonPaste.Text = "Paste";
+            this.buttonPaste.UseVisualStyleBackColor = false;
+            this.buttonPaste.Click += new System.EventHandler(this.buttonPaste_Click);
+            // 
+            // numericUpDownDelay
+            // 
+            this.numericUpDownDelay.DecimalPlaces = 2;
+            this.numericUpDownDelay.Location = new System.Drawing.Point(129, 42);
+            this.numericUpDownDelay.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDownDelay.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownDelay.Name = "numericUpDownDelay";
+            this.numericUpDownDelay.Size = new System.Drawing.Size(134, 29);
+            this.numericUpDownDelay.TabIndex = 10;
+            // 
+            // buttonCopy
+            // 
+            this.buttonCopy.BackColor = System.Drawing.Color.SlateBlue;
+            this.buttonCopy.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonCopy.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonCopy.Location = new System.Drawing.Point(33, 278);
+            this.buttonCopy.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonCopy.Name = "buttonCopy";
+            this.buttonCopy.Size = new System.Drawing.Size(129, 58);
+            this.buttonCopy.TabIndex = 9;
+            this.buttonCopy.Text = "Copy";
+            this.buttonCopy.UseVisualStyleBackColor = false;
+            this.buttonCopy.Click += new System.EventHandler(this.buttonCopy_Click);
             // 
             // buttonDelete
             // 
             this.buttonDelete.BackColor = System.Drawing.Color.SlateBlue;
             this.buttonDelete.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonDelete.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonDelete.Location = new System.Drawing.Point(33, 48);
+            this.buttonDelete.Location = new System.Drawing.Point(98, 346);
             this.buttonDelete.Margin = new System.Windows.Forms.Padding(4);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(129, 58);
             this.buttonDelete.TabIndex = 8;
             this.buttonDelete.Text = "Delete";
             this.buttonDelete.UseVisualStyleBackColor = false;
-            // 
-            // textBoxWaitMs
-            // 
-            this.textBoxWaitMs.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.textBoxWaitMs.Location = new System.Drawing.Point(135, 132);
-            this.textBoxWaitMs.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxWaitMs.Name = "textBoxWaitMs";
-            this.textBoxWaitMs.Size = new System.Drawing.Size(159, 23);
-            this.textBoxWaitMs.TabIndex = 7;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // groupBoxPosition
             // 
             this.groupBoxPosition.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxPosition.Controls.Add(this.textBoxPosY);
-            this.groupBoxPosition.Controls.Add(this.textBoxPosX);
+            this.groupBoxPosition.Controls.Add(this.numericUpDownY);
+            this.groupBoxPosition.Controls.Add(this.numericUpDownX);
             this.groupBoxPosition.Controls.Add(this.label4);
             this.groupBoxPosition.Controls.Add(this.label5);
             this.groupBoxPosition.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.groupBoxPosition.Location = new System.Drawing.Point(33, 185);
+            this.groupBoxPosition.Location = new System.Drawing.Point(33, 95);
             this.groupBoxPosition.Margin = new System.Windows.Forms.Padding(4);
             this.groupBoxPosition.Name = "groupBoxPosition";
             this.groupBoxPosition.Padding = new System.Windows.Forms.Padding(4);
@@ -221,23 +265,39 @@ namespace superbot.Views
             this.groupBoxPosition.TabStop = false;
             this.groupBoxPosition.Text = "Position";
             // 
-            // textBoxPosY
+            // numericUpDownY
             // 
-            this.textBoxPosY.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.textBoxPosY.Location = new System.Drawing.Point(71, 86);
-            this.textBoxPosY.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxPosY.Name = "textBoxPosY";
-            this.textBoxPosY.Size = new System.Drawing.Size(159, 23);
-            this.textBoxPosY.TabIndex = 9;
+            this.numericUpDownY.Location = new System.Drawing.Point(65, 90);
+            this.numericUpDownY.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDownY.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownY.Name = "numericUpDownY";
+            this.numericUpDownY.Size = new System.Drawing.Size(165, 26);
+            this.numericUpDownY.TabIndex = 12;
             // 
-            // textBoxPosX
+            // numericUpDownX
             // 
-            this.textBoxPosX.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.textBoxPosX.Location = new System.Drawing.Point(71, 46);
-            this.textBoxPosX.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxPosX.Name = "textBoxPosX";
-            this.textBoxPosX.Size = new System.Drawing.Size(159, 23);
-            this.textBoxPosX.TabIndex = 8;
+            this.numericUpDownX.Location = new System.Drawing.Point(65, 49);
+            this.numericUpDownX.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDownX.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownX.Name = "numericUpDownX";
+            this.numericUpDownX.Size = new System.Drawing.Size(165, 26);
+            this.numericUpDownX.TabIndex = 11;
             // 
             // label4
             // 
@@ -265,12 +325,12 @@ namespace superbot.Views
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label7.Location = new System.Drawing.Point(29, 135);
+            this.label7.Location = new System.Drawing.Point(29, 45);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(85, 23);
+            this.label7.Size = new System.Drawing.Size(93, 23);
             this.label7.TabIndex = 5;
-            this.label7.Text = "Wait(ms):";
+            this.label7.Text = "Delay(ms):";
             // 
             // groupBoxRecordSettings
             // 
@@ -389,9 +449,9 @@ namespace superbot.Views
             this.label2.Location = new System.Drawing.Point(21, 95);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(203, 23);
+            this.label2.Size = new System.Drawing.Size(147, 23);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Start/Stop Bot: Ctrl+Alt+S";
+            this.label2.Text = "Start/Stop Bot: F8";
             // 
             // panelRecord
             // 
@@ -438,9 +498,9 @@ namespace superbot.Views
             this.label1.Location = new System.Drawing.Point(21, 57);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(232, 23);
+            this.label1.Size = new System.Drawing.Size(175, 23);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Start/Stop Record: Ctrl+Alt+R";
+            this.label1.Text = "Start/Stop Record: F7";
             // 
             // listBoxCommands
             // 
@@ -455,42 +515,34 @@ namespace superbot.Views
             this.listBoxCommands.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listBoxCommands.Size = new System.Drawing.Size(332, 671);
             this.listBoxCommands.TabIndex = 10;
-            // 
-            // checkBoxHumanMouseMove
-            // 
-            this.checkBoxHumanMouseMove.AutoSize = true;
-            this.checkBoxHumanMouseMove.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.checkBoxHumanMouseMove.Location = new System.Drawing.Point(17, 69);
-            this.checkBoxHumanMouseMove.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBoxHumanMouseMove.Name = "checkBoxHumanMouseMove";
-            this.checkBoxHumanMouseMove.Size = new System.Drawing.Size(188, 27);
-            this.checkBoxHumanMouseMove.TabIndex = 3;
-            this.checkBoxHumanMouseMove.Text = "Human mouse move";
-            this.checkBoxHumanMouseMove.UseVisualStyleBackColor = true;
-            this.checkBoxHumanMouseMove.CheckedChanged += new System.EventHandler(this.updateExecutionSettings);
+            this.listBoxCommands.SelectedIndexChanged += new System.EventHandler(this.listBoxCommands_SelectedIndexChanged);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1107, 743);
-            this.Controls.Add(this.groupBoxBotSettings);
+            this.Controls.Add(this.groupBoxExecutionSettings);
             this.Controls.Add(this.groupBoxEdit);
             this.Controls.Add(this.groupBoxRecordSettings);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.listBoxCommands);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "SuperBot by Mateusz Kisiel";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.groupBoxBotSettings.ResumeLayout(false);
-            this.groupBoxBotSettings.PerformLayout();
+            this.groupBoxExecutionSettings.ResumeLayout(false);
+            this.groupBoxExecutionSettings.PerformLayout();
             this.groupBoxEdit.ResumeLayout(false);
             this.groupBoxEdit.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDelay)).EndInit();
             this.groupBoxPosition.ResumeLayout(false);
             this.groupBoxPosition.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownX)).EndInit();
             this.groupBoxRecordSettings.ResumeLayout(false);
             this.groupBoxRecordSettings.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -511,16 +563,13 @@ namespace superbot.Views
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem informacjeToolStripMenuItem;
-        private System.Windows.Forms.GroupBox groupBoxBotSettings;
+        private System.Windows.Forms.ToolStripMenuItem InfoToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBoxExecutionSettings;
         private System.Windows.Forms.CheckBox checkBoxLoop;
         private System.Windows.Forms.GroupBox groupBoxEdit;
-        private System.Windows.Forms.Button buttonDuplicate;
+        private System.Windows.Forms.Button buttonCopy;
         private System.Windows.Forms.Button buttonDelete;
-        private System.Windows.Forms.TextBox textBoxWaitMs;
         private System.Windows.Forms.GroupBox groupBoxPosition;
-        private System.Windows.Forms.TextBox textBoxPosY;
-        private System.Windows.Forms.TextBox textBoxPosX;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
@@ -539,5 +588,9 @@ namespace superbot.Views
         private System.Windows.Forms.CheckBox checkBoxPressInsteadOfUpDown;
         private System.Windows.Forms.CheckBox checkBoxClickInsteadOfUpDown;
         private System.Windows.Forms.CheckBox checkBoxHumanMouseMove;
+        private System.Windows.Forms.NumericUpDown numericUpDownDelay;
+        private System.Windows.Forms.NumericUpDown numericUpDownY;
+        private System.Windows.Forms.NumericUpDown numericUpDownX;
+        private System.Windows.Forms.Button buttonPaste;
     }
 }

@@ -12,7 +12,7 @@ namespace superbot
     {
         public static readonly string extension = ".sbot";
         public static readonly string extensionName = "Makro SuperBot";
-        public static HotKey recordingHotKey = new HotKey(new List<Keys>(){Keys.R, Keys.LControlKey, Keys.LMenu});
-        public static HotKey executeHotKey = new HotKey(new List<Keys>() { Keys.S, Keys.LControlKey, Keys.LMenu });
+        public static HotKey recordingHotKey = new HotKey(new List<Keys>(){ Keys.F7 });
+        public static HotKey executeHotKey = new HotKey(new List<Keys>() { Keys.F8 });
     }
 }

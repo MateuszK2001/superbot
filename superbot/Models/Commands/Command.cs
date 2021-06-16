@@ -50,10 +50,12 @@ namespace superbot.Models.Commands
                 using(BinaryWriter writer = new BinaryWriter(stream))
                 {
                     serializeWithTypeInfo(writer);
-                }
-                using(BinaryReader reader = new BinaryReader(stream))
-                {
-                    return Command.deserializeToNew(reader);
+                    writer.Flush();
+                    stream.Position = 0;
+                    using(BinaryReader reader = new BinaryReader(stream))
+                    {
+                        return Command.deserializeToNew(reader);
+                    }
                 }
             }
         }

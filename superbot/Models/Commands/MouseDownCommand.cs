@@ -35,6 +35,7 @@ namespace superbot.Models.Commands
         public override void execute()
         {
             Cursor.Position = new Point(x, y);
+
             if (button == MouseButtons.Left)
                 MouseHook.Click(MouseHook.Buttons.MOUSEEVENTF_LEFTDOWN);
             if (button == MouseButtons.Right)
