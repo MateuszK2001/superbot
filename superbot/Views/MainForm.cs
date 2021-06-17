@@ -319,5 +319,10 @@ namespace superbot.Views
         {
             currentCommandKey = e.KeyCode;
         }
+
+        private void InfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            presenter.showInfo();
+        }
     }
 }

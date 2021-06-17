@@ -130,6 +130,7 @@ namespace superbot.Views
             this.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem";
             this.InfoToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
             this.InfoToolStripMenuItem.Text = "Informacje";
+            this.InfoToolStripMenuItem.Click += new System.EventHandler(this.InfoToolStripMenuItem_Click);
             // 
             // groupBoxExecutionSettings
             // 
@@ -551,6 +552,7 @@ namespace superbot.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.HotTrack;
             this.ClientSize = new System.Drawing.Size(1107, 743);
             this.Controls.Add(this.groupBoxExecutionSettings);
             this.Controls.Add(this.groupBoxEdit);

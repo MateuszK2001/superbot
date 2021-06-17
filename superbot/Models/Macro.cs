@@ -27,6 +27,24 @@ namespace superbot.Models
             this.load(filename);
         }
 
+        bool moveTo(int x2, int y2, double time)
+        {
+            double x = Cursor.Position.X;
+            double y = Cursor.Position.Y;
+            const int W = 100;
+            double dx = (x2 - x) / (double)W;
+            double dy = (y2 - y) / (double)W;
+            double dt = time / W;
+            for(int i = 0; i<W; i++)
+            {
+                x += dx;
+                y += dy;
+                Cursor.Position = new System.Drawing.Point((int)x, (int)y);
+                if (cts.Token.WaitHandle.WaitOne((int)dt))
+                    return true;
+            }
+            return false;
+        }
         public void run()
         {
             isRunning = true;
@@ -38,7 +56,13 @@ namespace superbot.Models
                 {
                     foreach (var command in commands)
                     {
-                        if (cts.Token.WaitHandle.WaitOne(command.delay))
+                        if(executionSettings.humanMouseMove && command is IPositionable)
+                        {
+                            IPositionable pos = command as IPositionable;
+                            if (moveTo(pos.x, pos.y, command.delay.TotalMilliseconds))
+                                break;
+                        }
+                        else if (cts.Token.WaitHandle.WaitOne(command.delay))
                             break;
                         command.execute();
                     }

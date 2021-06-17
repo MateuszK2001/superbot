@@ -221,6 +221,10 @@ namespace superbot.Presenters
                 }
             reloadCommands(positionsToReload);
         }
+        public void showInfo()
+        {
+            (new InfoForm()).Show(view as IWin32Window);
+        }
         public void onSelectionChanged()
         {
             this.view.canEdit =  view.selectedCommands.Count > 0;
