@@ -388,7 +388,7 @@ namespace superbot.Views
             this.checkBoxPressInsteadOfUpDown.Name = "checkBoxPressInsteadOfUpDown";
             this.checkBoxPressInsteadOfUpDown.Size = new System.Drawing.Size(256, 27);
             this.checkBoxPressInsteadOfUpDown.TabIndex = 5;
-            this.checkBoxPressInsteadOfUpDown.Text = "Press instead of btn up/down";
+            this.checkBoxPressInsteadOfUpDown.Text = "Press instead of key up/down";
             this.checkBoxPressInsteadOfUpDown.UseVisualStyleBackColor = true;
             this.checkBoxPressInsteadOfUpDown.CheckedChanged += new System.EventHandler(this.updateRecordingSettings);
             // 
@@ -401,7 +401,7 @@ namespace superbot.Views
             this.checkBoxClickInsteadOfUpDown.Name = "checkBoxClickInsteadOfUpDown";
             this.checkBoxClickInsteadOfUpDown.Size = new System.Drawing.Size(249, 27);
             this.checkBoxClickInsteadOfUpDown.TabIndex = 4;
-            this.checkBoxClickInsteadOfUpDown.Text = "Click instead of key up/down";
+            this.checkBoxClickInsteadOfUpDown.Text = "Click instead of btn up/down";
             this.checkBoxClickInsteadOfUpDown.UseVisualStyleBackColor = true;
             this.checkBoxClickInsteadOfUpDown.CheckedChanged += new System.EventHandler(this.updateRecordingSettings);
             // 
